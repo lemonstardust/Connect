@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt' // kapt 插件
+//apply plugin: 'kotlin-android-extensions'
+
+
+android {
+    namespace 'com.example.desktopdemo'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.desktopdemo"
+        minSdk 29
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+}
+
+
+dependencies {//项目的依赖关系
+    implementation fileTree(include: ['*.jar'], dir: 'libs')//本地jar包依赖
+    implementation('androidx.constraintlayout:constraintlayout:2.1.4')
+//    implementation('androidx.activity:activity-ktx:1.9.2')
+    implementation('com.google.android.material:material:1.5.0')
+//    implementation('androidx.activity:activity:1.9.2')
+    testImplementation 'junit:junit:4.13.2'//声明测试用例库
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
