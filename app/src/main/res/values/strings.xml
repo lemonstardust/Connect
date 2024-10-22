@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">DeskTopDemo</string>
+    <string name="app_name">Connect6</string>
+
+    <string name="restart">重新开始</string>
+    <string name="quit">退出</string>
+    <string name="PVP">人人对弈</string>
+    <string name="PVE_easy">人机对弈（简单）</string>
+    <string name="PVE_normal">人机对弈（困难）</string>
+    <string name="PVE_hard">人机对弈（困难）（会卡顿）</string>
+    <string name="PVE">人机对弈</string>
+    <string name="game3">电脑VS电脑</string>
+
+    <string name="choose_side">选择颜色</string>
+    <string name="black_side">黑方</string>
+    <string name="white_side">白方</string>
 </resources>
