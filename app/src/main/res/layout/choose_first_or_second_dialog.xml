@@ -1,44 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/choose_side"
-    >
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/win_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/choose_side"
-        android:id="@+id/win_title"
         android:gravity="center"
-        android:textSize="30sp"
-        />
+        android:text="@string/choose_side"
+        android:textSize="30sp" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        >
+        android:orientation="horizontal">
+
         <Button
+            android:id="@+id/black_side"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:text="@string/black_side"
-            android:id="@+id/black_side"
-            android:textColor="@color/blue"
-            />
+            android:textColor="@color/blue" />
+
         <Button
+            android:id="@+id/white_side"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:text="@string/white_side"
-            android:id="@+id/white_side"
-            android:textColor="@color/blue"
-            />
+            android:textColor="@color/blue" />
     </LinearLayout>
 
 </LinearLayout>

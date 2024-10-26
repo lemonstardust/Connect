@@ -1,4 +1,4 @@
-package com.example.desktopdemo;
+package com.example.connect;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,8 +6,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.desktopdemo.Dialog.ChooseSide;
-import com.example.desktopdemo.Game.GameConfig;
+import com.example.connect.dialog.ChooseSide;
+import com.example.connect.game.GameConfig;
+import com.example.desktopdemo.R;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +20,7 @@ public class Start_Board extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board);
         if(GameConfig.VSWay != GameConfig.PLAYERVSPLAYER){
-            ChooseSide chooseSide = new ChooseSide(,false,null);
+            ChooseSide chooseSide = new ChooseSide(this,false,null);
             chooseSide.show();
         }
 

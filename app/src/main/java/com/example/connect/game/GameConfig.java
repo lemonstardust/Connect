@@ -1,4 +1,4 @@
-package com.example.desktopdemo.Game;
+package com.example.connect.game;
 
 
 public class GameConfig {

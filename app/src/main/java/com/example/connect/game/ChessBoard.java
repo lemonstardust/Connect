@@ -1,9 +1,5 @@
-package com.example.desktopdemo.Game;
+package com.example.connect.game;
 
-
-import static com.example.desktopdemo.Game.GameConfig.BLACKCHESS;
-import static com.example.desktopdemo.Game.GameConfig.NOCHESS;
-import static com.example.desktopdemo.Game.GameConfig.WHITECHESS;
 
 import java.util.Stack;
 
@@ -12,7 +8,7 @@ public class ChessBoard {
 
     public static char[][] chessBoard = new char[19][19];
 
-    public char currentRole = BLACKCHESS;
+    public char currentRole = GameConfig.BLACKCHESS;
 
     private static Stack<Integer> play_stack = new Stack<>();
 
@@ -40,7 +36,7 @@ public class ChessBoard {
     public static void initboard() {
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 19; j++) {
-                chessBoard[i][j] = NOCHESS;
+                chessBoard[i][j] = GameConfig.NOCHESS;
                 play_stack.clear();
             }
         }
@@ -60,16 +56,16 @@ public class ChessBoard {
     }
 
     public static char getNextStepChessColor() {
-        char chessColor = NOCHESS;
+        char chessColor = GameConfig.NOCHESS;
         int chessNum = getAllChessNumber();
         switch (chessNum % 4) {
             case 0:
             case 3:
-                chessColor = BLACKCHESS;
+                chessColor = GameConfig.BLACKCHESS;
                 break;
             case 1:
             case 2:
-                chessColor = WHITECHESS;
+                chessColor = GameConfig.WHITECHESS;
                 break;
         }
         return chessColor;
@@ -93,7 +89,7 @@ public class ChessBoard {
         int x=coord/100;
         int y=coord%100;
         // 从已下棋子hash列表中移除添加的棋子
-        chessBoard[y-1][x-1] = NOCHESS;
+        chessBoard[y-1][x-1] = GameConfig.NOCHESS;
     }
 
     /**

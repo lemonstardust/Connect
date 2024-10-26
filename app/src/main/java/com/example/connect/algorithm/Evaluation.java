@@ -1,8 +1,8 @@
-package com.example.desktopdemo.Algorithm;
+package com.example.connect.algorithm;
 
 
-import com.example.desktopdemo.Game.GameConfig;
-import com.example.desktopdemo.Game.Road;
+import com.example.connect.game.GameConfig;
+import com.example.connect.game.Road;
 
 import java.util.Vector;
 

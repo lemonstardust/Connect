@@ -1,9 +1,5 @@
-package com.example.desktopdemo.Game;
+package com.example.connect.game;
 
-
-import static com.example.desktopdemo.Game.GameConfig.BLACKCHESS;
-import static com.example.desktopdemo.Game.GameConfig.NOCHESS;
-import static com.example.desktopdemo.Game.GameConfig.WHITECHESS;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,9 +10,9 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.example.desktopdemo.Algorithm.Evaluation;
-import com.example.desktopdemo.Algorithm.Search;
-import com.example.desktopdemo.Dialog.WinDialog;
+import com.example.connect.dialog.WinDialog;
+import com.example.connect.algorithm.Evaluation;
+import com.example.connect.algorithm.Search;
 import com.example.desktopdemo.R;
 
 
@@ -113,11 +109,11 @@ public class Game extends View {
             for (int j = 0;j<=18;j++)
             {
                 //黑棋
-                if (board[i][j] == BLACKCHESS)
+                if (board[i][j] == GameConfig.BLACKCHESS)
                     canvas.drawCircle((j+1)*view_width/20,boardToTop+(i+1)*view_width/20,view_height/80,drawBlack);
 
                 //白棋
-                if (board[i][j] == WHITECHESS)
+                if (board[i][j] == GameConfig.WHITECHESS)
                     canvas.drawCircle((j+1)*view_width/20,boardToTop+(i+1)*view_width/20,view_height/80,drawWhite);
             }
         }
@@ -147,11 +143,11 @@ public class Game extends View {
             case MotionEvent.ACTION_DOWN:
                 //人人模式
                 if (GameConfig.VSWay == GameConfig.PLAYERVSPLAYER){
-                    if (board[y][x] == NOCHESS) {
-                        if (currentRole == BLACKCHESS){
+                    if (board[y][x] == GameConfig.NOCHESS) {
+                        if (currentRole == GameConfig.BLACKCHESS){
                             chessBoard.addChess((x+1)*100 + y+1);
                         }
-                        if (currentRole == WHITECHESS){
+                        if (currentRole == GameConfig.WHITECHESS){
                             chessBoard.addChess((x+1)*100 + y+1);
                         }
                     }
@@ -161,7 +157,7 @@ public class Game extends View {
                 if (GameConfig.VSWay == GameConfig.PLAYERVSAI){
                     //AI执白，玩家执黑
                     if (GameConfig.BlackStatus == GameConfig.PLAYER && GameConfig.WhiteStatus == GameConfig.AI){
-                        if (currentRole == WHITECHESS){
+                        if (currentRole == GameConfig.WHITECHESS){
                             move = Search.getNextMoves(board);
                             if(move != null) {
                                 for(int coord:move.getCoordArray()){
@@ -170,13 +166,13 @@ public class Game extends View {
                             }
 
                         }
-                        if (currentRole== BLACKCHESS && board[y][x] == NOCHESS){
+                        if (currentRole== GameConfig.BLACKCHESS && board[y][x] == GameConfig.NOCHESS){
                             chessBoard.addChess((x+1)*100 + y+1);
                         }
                     }
                     //AI执黑，玩家执白
                     if(GameConfig.BlackStatus==GameConfig.AI && GameConfig.WhiteStatus==GameConfig.PLAYER){
-                        if(currentRole== BLACKCHESS){
+                        if(currentRole== GameConfig.BLACKCHESS){
                             if(ChessBoard.getAllChessNumber()==0){
                                 move=new Move(1010);
                             }else{
@@ -189,7 +185,7 @@ public class Game extends View {
                                 }
                             }
                         }
-                        if (currentRole == WHITECHESS && board[y][x] == NOCHESS){
+                        if (currentRole == GameConfig.WHITECHESS && board[y][x] == GameConfig.NOCHESS){
                             chessBoard.addChess((x+1)*100 + y+1);
                         }
                     }
@@ -201,7 +197,7 @@ public class Game extends View {
                 if (result){
                     WinDialog win = new WinDialog(mContext,false,null);
 
-                    if (currentRole == BLACKCHESS){
+                    if (currentRole == GameConfig.BLACKCHESS){
                         win.setWinTitle("Black   Win !");
                     }else
                         win.setWinTitle("White   Win !");

@@ -1,9 +1,9 @@
-package com.example.desktopdemo.Algorithm;
+package com.example.connect.algorithm;
 
 
-import com.example.desktopdemo.Game.ChessBoard;
-import com.example.desktopdemo.Game.GameConfig;
-import com.example.desktopdemo.Game.Move;
+import com.example.connect.game.ChessBoard;
+import com.example.connect.game.GameConfig;
+import com.example.connect.game.Move;
 
 import java.util.ArrayList;
 import java.util.Collections;

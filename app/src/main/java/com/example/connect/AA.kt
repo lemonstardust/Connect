@@ -1,4 +1,4 @@
-package com.example.desktopdemo
+package com.example.connect
 
 import androidx.appcompat.app.AppCompatActivity
 

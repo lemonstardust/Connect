@@ -1,4 +1,4 @@
-package com.example.desktopdemo
+package com.example.connect
 
 
 import android.content.Intent
@@ -6,8 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.desktopdemo.Dialog.ChooseSide
-import com.example.desktopdemo.Game.GameConfig
+import com.example.connect.dialog.ChooseSide
+import com.example.connect.game.GameConfig
+import com.example.desktopdemo.R
 import com.example.desktopdemo.databinding.ActivityMainBinding
 
 

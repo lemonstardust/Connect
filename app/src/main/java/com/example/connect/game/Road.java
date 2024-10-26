@@ -1,8 +1,8 @@
-package com.example.desktopdemo.Game;
+package com.example.connect.game;
 
-import static com.example.desktopdemo.Game.GameConfig.BLACKCHESS;
-import static com.example.desktopdemo.Game.GameConfig.NOCHESS;
-import static com.example.desktopdemo.Game.GameConfig.WHITECHESS;
+import static com.example.connect.game.GameConfig.BLACKCHESS;
+import static com.example.connect.game.GameConfig.NOCHESS;
+import static com.example.connect.game.GameConfig.WHITECHESS;
 
 import java.util.Vector;
 
