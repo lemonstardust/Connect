@@ -1,4 +1,4 @@
-package com.example.connect
+package com.example.connect.activity
 
 
 import android.content.Intent
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        chooseSide = ChooseSide(this@MainActivity, false, null)
+        chooseSide = ChooseSide(this@MainActivity)
 
 
         binding.pvp.setOnClickListener(this)

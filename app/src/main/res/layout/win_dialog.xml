@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/winDialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,39 +8,59 @@
 
     >
 
-    <TextView
-        android:id="@+id/win_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/choose_side"
-        android:gravity="center"
-        android:text="aaaa"
-        android:textColor="@color/black"
-        android:textSize="30sp" />
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/win_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/choose_side"
+            android:gravity="center"
+            android:text="aaaa"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="请选择棋子颜色"
+            android:textSize="24sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/win_title" />
+
 
         <Button
             android:id="@+id/restart"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
+            android:layout_marginTop="30dp"
             android:text="@string/restart"
-            android:textColor="@color/blue" />
+            android:textColor="@color/blue"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/quit"
+            app:layout_constraintTop_toBottomOf="@id/content" />
 
         <Button
             android:id="@+id/quit"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
             android:text="@string/quit"
-            android:textColor="@color/blue" />
-    </LinearLayout>
+            android:textColor="@color/blue"
+            app:layout_constraintLeft_toRightOf="@id/restart"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/restart" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

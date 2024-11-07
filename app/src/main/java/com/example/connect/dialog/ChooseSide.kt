@@ -1,38 +1,33 @@
 package com.example.connect.dialog
 
-import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import com.example.connect.game.GameConfig
 import com.example.desktopdemo.R
+import com.example.desktopdemo.databinding.ChooseFirstOrSecondDialogBinding
 
-class ChooseSide : AlertDialog, View.OnClickListener {
-    private var mContext: Context? = null
+class ChooseSide(context: Context) : Dialog(context), View.OnClickListener {
 
-    constructor(context: Context?) : super(context) {
-        mContext = context
-    }
 
-    constructor(
-        context: Context?,
-        cancelable: Boolean,
-        cancelListener: DialogInterface.OnCancelListener?
-    ) : super(context, cancelable, cancelListener)
-
-    override fun onCreate(savedInstanceState: Bundle) {
+    private lateinit var mBinding: ChooseFirstOrSecondDialogBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.choose_first_or_second_dialog)
+        mBinding = ChooseFirstOrSecondDialogBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
         init()
     }
 
+
     private fun init() {
-        val black_side = findViewById<Button>(R.id.black_side)
-        val white_side = findViewById<Button>(R.id.white_side)
-        black_side.setOnClickListener(this)
-        white_side.setOnClickListener(this)
+
+
+        setCancelable(false)
+        setCanceledOnTouchOutside(false)
+
+        mBinding.blackSide.setOnClickListener(this)
+        mBinding.whiteSide.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {

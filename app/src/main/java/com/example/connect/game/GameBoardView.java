@@ -16,7 +16,7 @@ import com.example.connect.algorithm.Search;
 import com.example.desktopdemo.R;
 
 
-public class Game extends View {
+public class GameBoardView extends View {
     private Context mContext;
 
     private static int view_width ;          //手机屏幕的宽度
@@ -31,7 +31,7 @@ public class Game extends View {
     ChessBoard chessBoard = new ChessBoard();
     char[][] board;
 
-    public Game(Context context) {
+    public GameBoardView(Context context) {
         super(context);
         mContext = context;
 
@@ -44,7 +44,7 @@ public class Game extends View {
         board =  chessBoard.getChessBoardDate();
     }
 
-    public Game(Context context, @Nullable AttributeSet attrs) {
+    public GameBoardView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         mContext = context;
@@ -58,7 +58,7 @@ public class Game extends View {
         board =  chessBoard.getChessBoardDate();
     }
 
-    public Game(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public GameBoardView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
 
@@ -195,7 +195,7 @@ public class Game extends View {
 
                 boolean result = Evaluation.isGameOver(board);
                 if (result){
-                    WinDialog win = new WinDialog(mContext,false,null);
+                    WinDialog win = new WinDialog(mContext);
 
                     if (currentRole == GameConfig.BLACKCHESS){
                         win.setWinTitle("Black   Win !");

@@ -6,18 +6,16 @@
 
     <Button
         android:id="@+id/enterButton"
-        android:text="确认"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:clickable="false"
-        />
+        android:text="确认"
+        android:visibility="invisible" />
 
-    <cn.t.connect6.Game.Game
+    <com.example.connect.game.GameBoardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
 
 </FrameLayout>

@@ -4,61 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.connect.MainActivity">
+    tools:context="com.example.connect.activity.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <Button
             android:id="@+id/pvp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/PVP"
             android:layout_gravity="center"
             android:layout_marginTop="50sp"
             android:background="@drawable/shape"
-            />
+            android:text="@string/PVP" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50sp"
             android:id="@+id/easy"
-            android:text="@string/PVE_easy"
-            android:layout_gravity="center"
-            android:background="@drawable/shape"
-
-            />
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/normal"
-            android:text="@string/PVE_normal"
             android:layout_gravity="center"
             android:layout_marginTop="50sp"
             android:background="@drawable/shape"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/hard"
-            android:text="@string/PVE_hard"
-            android:layout_gravity="center"
-            android:clickable="false"
-            android:visibility="invisible"
+            android:text="@string/PVE_easy"
+
             />
 
         <Button
+            android:id="@+id/normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/eve"
-            android:text="@string/game3"
             android:layout_gravity="center"
-            android:visibility="invisible"
+            android:layout_marginTop="50sp"
+            android:background="@drawable/shape"
+            android:text="@string/PVE_normal" />
+
+        <Button
+            android:id="@+id/hard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:clickable="false"
-            />
+            android:text="@string/PVE_hard"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/eve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:text="@string/game3"
+            android:visibility="invisible" />
 
     </LinearLayout>
 

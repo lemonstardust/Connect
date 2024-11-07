@@ -1,4 +1,4 @@
-package com.example.connect;
+package com.example.connect.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -19,8 +19,9 @@ public class Start_Board extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board);
+
         if(GameConfig.VSWay != GameConfig.PLAYERVSPLAYER){
-            ChooseSide chooseSide = new ChooseSide(this,false,null);
+            ChooseSide chooseSide = new ChooseSide(this);
             chooseSide.show();
         }
 

@@ -10,18 +10,22 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DeskTopDemo"
+        android:theme="@style/DeskTopDemo"
         tools:targetApi="31">
         <activity
-            android:name="com.example.connect.MainActivity"
+            android:name="com.example.connect.activity.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.DeskTopDemo">
+            android:theme="@style/DeskTopDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.example.connect.activity.Start_Board" />
+
+
     </application>
 
 </manifest>

@@ -1,41 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/choose_side"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/win_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/choose_side"
-        android:textSize="30sp" />
+        android:background="@color/white"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="30dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/win_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="提示"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="请选择棋子颜色"
+            android:textSize="24sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/win_title" />
 
         <Button
             android:id="@+id/black_side"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:layout_weight="1"
             android:background="@null"
             android:text="@string/black_side"
-            android:textColor="@color/blue" />
+            android:textColor="@color/blue"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/white_side"
+            app:layout_constraintTop_toBottomOf="@id/content" />
 
         <Button
             android:id="@+id/white_side"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:text="@string/white_side"
-            android:textColor="@color/blue" />
-    </LinearLayout>
+            android:textColor="@color/blue"
+            app:layout_constraintLeft_toRightOf="@id/black_side"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/black_side" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
