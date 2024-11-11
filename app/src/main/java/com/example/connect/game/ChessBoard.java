@@ -12,7 +12,9 @@ public class ChessBoard {
 
     private static Stack<Integer> play_stack = new Stack<>();
 
-    /** 脱离战场范围的范围 */
+    /**
+     * 脱离战场范围的范围
+     */
     private static int xMin = 20;
 
     private static int xMax = 0;
@@ -46,7 +48,7 @@ public class ChessBoard {
         return currentRole;
     }
 
-    public char [][] getChessBoardDate(){
+    public char[][] getChessBoardDate() {
         return chessBoard;
     }
 
@@ -72,10 +74,10 @@ public class ChessBoard {
     }
 
     public static void makeChess(int coord) {
-        int x=coord/100;
-        int y=coord%100;
+        int x = coord / 100;
+        int y = coord % 100;
         // 向棋局局势数组中添加棋子
-        chessBoard[y-1][x-1] = getNextStepChessColor();
+        chessBoard[y - 1][x - 1] = getNextStepChessColor();
         // 向下棋的顺序栈中添加棋子
         play_stack.push(coord);
     }
@@ -86,10 +88,10 @@ public class ChessBoard {
     public static void unMakeChess() {
         // 从下棋顺序栈中弹出添加的棋子
         int coord = play_stack.pop();
-        int x=coord/100;
-        int y=coord%100;
+        int x = coord / 100;
+        int y = coord % 100;
         // 从已下棋子hash列表中移除添加的棋子
-        chessBoard[y-1][x-1] = GameConfig.NOCHESS;
+        chessBoard[y - 1][x - 1] = GameConfig.NOCHESS;
     }
 
     /**
@@ -113,8 +115,8 @@ public class ChessBoard {
     }
 
     public void addChess(int coord) {
-        int x = coord/100;
-        int y = coord%100;
+        int x = coord / 100;
+        int y = coord % 100;
         if (x < xMin) {
             xMin = x;
         }
@@ -128,16 +130,16 @@ public class ChessBoard {
             yMax = y;
         }
         // 向棋局局势数组中添加棋子
-        chessBoard[y -1][x -1] = getNextStepChessColor();
+        chessBoard[y - 1][x - 1] = getNextStepChessColor();
         // 向下棋的顺序栈中添加棋子
         play_stack.push(coord);
         //notifyChessBoardModelEvent(new ChessBoardModelEvent(this, coord));
 
-        char role=getNextStepChessColor();
+        char role = getNextStepChessColor();
 //		if(currentRole!=role){
 //			notifyRoleChangeEvent(new RoleChangeEvent(this));
 //		}
-        currentRole=role;
+        currentRole = role;
     }
 
     public static int getxMin() {

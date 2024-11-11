@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.connect.activity.Start_Board" />
+        <activity android:name="com.example.connect.activity.StartBoard" />
 
 
     </application>

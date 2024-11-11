@@ -14,12 +14,6 @@ import com.example.desktopdemo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    //    private var pvp: Button? = null
-//    private var easy: Button? = null
-//    private var normal: Button? = null
-//    private var hard: Button? = null
-//    private var eve: Button? = null
-//    private var intent: Intent? = null
     private var chooseSide: ChooseSide? = null
 
     private lateinit var binding: ActivityMainBinding
@@ -42,27 +36,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.easy -> {
                 GameConfig.VSWay = GameConfig.PLAYERVSAI
                 GameConfig.AILevel = GameConfig.NOVICEDEEP
-                intent = Intent(this@MainActivity, Start_Board::class.java)
+                intent = Intent(this@MainActivity, StartBoard::class.java)
                 startActivity(intent)
             }
 
             R.id.normal -> {
                 GameConfig.VSWay = GameConfig.PLAYERVSAI
                 GameConfig.AILevel = GameConfig.NORMALDEEP
-                intent = Intent(this@MainActivity, Start_Board::class.java)
+                intent = Intent(this@MainActivity, StartBoard::class.java)
                 startActivity(intent)
             }
 
             R.id.hard -> {
                 GameConfig.AILevel = GameConfig.HARDDEEP
                 GameConfig.VSWay = GameConfig.PLAYERVSAI
-                intent = Intent(this@MainActivity, Start_Board::class.java)
+                intent = Intent(this@MainActivity, StartBoard::class.java)
                 startActivity(intent)
             }
 
             R.id.pvp -> {
                 GameConfig.VSWay = GameConfig.PLAYERVSPLAYER
-                intent = Intent(this@MainActivity, Start_Board::class.java)
+                intent = Intent(this@MainActivity, StartBoard::class.java)
                 startActivity(intent)
             }
 

@@ -6,17 +6,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.example.connect.activity.MainActivity
-import com.example.connect.activity.Start_Board
+import com.example.connect.activity.StartBoard
 import com.example.desktopdemo.R
 import com.example.desktopdemo.databinding.WinDialogBinding
 
 class WinDialog(context: Context) : Dialog(context), View.OnClickListener {
 
 
-    private lateinit var mBinding: WinDialogBinding
+    private val mBinding: WinDialogBinding = WinDialogBinding.inflate(layoutInflater)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = WinDialogBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         init()
     }
@@ -26,7 +26,7 @@ class WinDialog(context: Context) : Dialog(context), View.OnClickListener {
         mBinding.quit.setOnClickListener(this)
     }
 
-    fun setWinTitle(s: String?) {
+    fun setWinTitle(s: String) {
         mBinding.content.text = s
     }
 
@@ -35,7 +35,7 @@ class WinDialog(context: Context) : Dialog(context), View.OnClickListener {
             R.id.restart -> {
                 val intent1 = Intent(
                     context,
-                    Start_Board::class.java
+                    StartBoard::class.java
                 ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 context.startActivity(intent1)
                 cancel()
