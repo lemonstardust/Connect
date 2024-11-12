@@ -11,6 +11,7 @@ import com.example.connect.algorithm.Evaluation
 import com.example.connect.algorithm.Search
 import com.example.connect.dialog.WinDialog
 import com.example.desktopdemo.R
+import kotlin.math.min
 
 
 class GameBoardView @JvmOverloads constructor(
@@ -19,14 +20,21 @@ class GameBoardView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+    companion object {
+        private const val WIDTH_INTERVAL = 40
+        private const val HALF_WIDTH_INTERVAL = WIDTH_INTERVAL / 2
+    }
+
     private var screenWidth = 0 //手机屏幕的宽度
     private var screenHeight = 0 //手机屏幕的高度
-    private var boardToTop = 0
+    private var mTopMargin = 0
     private var left = 0
     private var right = 0
     private var top = 0
     private var bottom = 0
     private var grid: Int = 0 //每个方格的大小
+
+    private var mChessRadius: Float = WIDTH_INTERVAL * 2f
 
     private lateinit var paintLine: Paint
     private lateinit var drawBlack: Paint
@@ -36,6 +44,14 @@ class GameBoardView @JvmOverloads constructor(
     private var currentRole: Char = 0.toChar() //目前角色
     private var chessBoard: ChessBoard = ChessBoard()
     private lateinit var board: Array<CharArray>
+
+    private var eventX = 0
+
+    private var eventY = 0
+
+    private var boardX = 0
+
+    private var boardY = 0
 
 
     init {
@@ -52,6 +68,10 @@ class GameBoardView @JvmOverloads constructor(
         drawBlack = Paint()
         drawWhite = Paint()
         background = Paint()
+        //画棋盘背景————矩形
+        background.color = resources.getColor(R.color.board_background)
+        background.style = Paint.Style.FILL_AND_STROKE
+
         //设置棋子画笔
         drawWhite.style = Paint.Style.FILL_AND_STROKE
         drawBlack.style = Paint.Style.FILL_AND_STROKE
@@ -65,14 +85,11 @@ class GameBoardView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        //画棋盘背景————矩形
-        background.color = resources.getColor(R.color.board_background)
-        background.style = Paint.Style.FILL_AND_STROKE
         canvas.drawRect(
             0f,
-            boardToTop.toFloat(),
+            mTopMargin.toFloat(),
             screenWidth.toFloat(),
-            (boardToTop + screenWidth).toFloat(),
+            (mTopMargin + screenWidth).toFloat(),
             background
         )
 
@@ -80,16 +97,16 @@ class GameBoardView @JvmOverloads constructor(
         for (i in 0..18) {
             canvas.drawLine(
                 left.toFloat(),
-                (boardToTop + top + i * grid).toFloat(),
+                (mTopMargin + top + i * grid).toFloat(),
                 (screenWidth - right).toFloat(),
-                (boardToTop + top + i * grid).toFloat(),
+                (mTopMargin + top + i * grid).toFloat(),
                 paintLine
             )
             canvas.drawLine(
                 (left + i * grid).toFloat(),
-                (boardToTop + top).toFloat(),
+                (mTopMargin + top).toFloat(),
                 (left + i * grid).toFloat(),
-                (boardToTop + screenWidth - bottom).toFloat(),
+                (mTopMargin + screenWidth - bottom).toFloat(),
                 paintLine
             )
         }
@@ -102,17 +119,17 @@ class GameBoardView @JvmOverloads constructor(
             for (j in 0..18) {
                 //黑棋
                 if (board[i][j] == GameConfig.BLACKCHESS) canvas.drawCircle(
-                    ((j + 1) * screenWidth / 20).toFloat(),
-                    (boardToTop + (i + 1) * screenWidth / 20).toFloat(),
-                    (screenHeight / 80).toFloat(),
+                    ((j + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
+                    (mTopMargin + (i + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
+                    mChessRadius,
                     drawBlack
                 )
 
                 //白棋
                 if (board[i][j] == GameConfig.WHITECHESS) canvas.drawCircle(
-                    ((j + 1) * screenWidth / 20).toFloat(),
-                    (boardToTop + (i + 1) * screenWidth / 20).toFloat(),
-                    (screenHeight / 80).toFloat(),
+                    ((j + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
+                    (mTopMargin + (i + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
+                    mChessRadius,
                     drawWhite
                 )
             }
@@ -120,79 +137,103 @@ class GameBoardView @JvmOverloads constructor(
         invalidate()
     }
 
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        var x = event.x.toInt()
-        var y = event.y.toInt()
-        if ((x < screenWidth / 40 || x > screenWidth - screenWidth / 40 || y <= boardToTop) || y > (screenHeight - boardToTop)) {
+        eventX = event.x.toInt()
+        eventY = event.y.toInt()
+
+
+        if ((eventX < screenWidth / WIDTH_INTERVAL || eventX > screenWidth - screenWidth / WIDTH_INTERVAL || eventY <= mTopMargin) || eventY > (screenHeight - mTopMargin)) {
             return false
         }
-        x = (x - screenWidth / 20 + screenWidth / 40) / (screenWidth / 20)
-        y = (y - boardToTop - screenWidth / 20 + screenWidth / 40) / (screenWidth / 20)
-        if (x > 18) x = 18
-        if (y > 18) y = 18
+        boardX = (eventX - screenWidth / HALF_WIDTH_INTERVAL + screenWidth / WIDTH_INTERVAL) /
+                (screenWidth / HALF_WIDTH_INTERVAL)
+        boardY =
+            (eventY - mTopMargin - screenWidth / HALF_WIDTH_INTERVAL + screenWidth / WIDTH_INTERVAL) /
+                    (screenWidth / HALF_WIDTH_INTERVAL)
 
-        var move: Move? = null
+        boardX = min(boardX, 18)
+        boardY = min(boardY, 18)
+
         currentRole = chessBoard.currentRole
+
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                when (GameConfig.VSWay) {
-                    GameConfig.PLAYERVSPLAYER -> {
-                        if (board[y][x] == GameConfig.NOCHESS) {
-                            if (currentRole == GameConfig.BLACKCHESS) {
-                                chessBoard.addChess((x + 1) * 100 + y + 1)
-                            }
-                            if (currentRole == GameConfig.WHITECHESS) {
-                                chessBoard.addChess((x + 1) * 100 + y + 1)
-                            }
-                        }
-                    }
+                touchDown(event)
+            }
 
-                    GameConfig.PLAYERVSAI -> {
-                        //AI执白，玩家执黑
-                        if (GameConfig.BlackStatus == GameConfig.PLAYER && GameConfig.WhiteStatus == GameConfig.AI) {
-                            if (currentRole == GameConfig.WHITECHESS) {
-                                move = Search.getNextMoves(board)
-                                if (move != null) {
-                                    for (coord in move.coordArray) {
-                                        chessBoard.addChess(coord)
-                                    }
-                                }
-                            }
-                            if (currentRole == GameConfig.BLACKCHESS && board[y][x] == GameConfig.NOCHESS) {
-                                chessBoard.addChess((x + 1) * 100 + y + 1)
-                            }
-                        }
-                        //AI执黑，玩家执白
-                        if (GameConfig.BlackStatus == GameConfig.AI && GameConfig.WhiteStatus == GameConfig.PLAYER) {
-                            if (currentRole == GameConfig.BLACKCHESS) {
-                                move = if (ChessBoard.getAllChessNumber() == 0) {
-                                    Move(1010)
-                                } else {
-                                    Search.getNextMoves(board)
-                                }
-                                if (move != null) {
-                                    for (coord in move.coordArray) {
-                                        chessBoard.addChess(coord)
-                                        //System.out.println("black = "+coord);
-                                    }
-                                }
-                            }
-                            if (currentRole == GameConfig.WHITECHESS && board[y][x] == GameConfig.NOCHESS) {
-                                chessBoard.addChess((x + 1) * 100 + y + 1)
-                            }
-                        }
-                    }
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                val count = event.pointerCount
+            }
 
-                    else -> {
-                        //机机模式
-                    }
-                }
+            MotionEvent.ACTION_POINTER_UP -> {
 
-                evaluationResult()
+            }
+
+            MotionEvent.ACTION_UP -> {
+
             }
         }
         return true
+    }
+
+    private fun touchDown(event: MotionEvent) {
+        var move: Move?
+        when (GameConfig.VSWay) {
+            GameConfig.PLAYERVSPLAYER -> {
+                if (board[boardY][boardX] == GameConfig.NOCHESS) {
+                    if (currentRole == GameConfig.BLACKCHESS) {
+                        chessBoard.addChess((boardX + 1) * 100 + boardY + 1)
+                    }
+                    if (currentRole == GameConfig.WHITECHESS) {
+                        chessBoard.addChess((boardX + 1) * 100 + boardY + 1)
+                    }
+                }
+            }
+
+            GameConfig.PLAYERVSAI -> {
+                //AI执白，玩家执黑
+                if (GameConfig.BlackStatus == GameConfig.PLAYER && GameConfig.WhiteStatus == GameConfig.AI) {
+                    if (currentRole == GameConfig.WHITECHESS) {
+                        move = Search.getNextMoves(board)
+                        if (move != null) {
+                            for (coord in move.coordArray) {
+                                chessBoard.addChess(coord)
+                            }
+                        }
+                    }
+                    if (currentRole == GameConfig.BLACKCHESS && board[boardY][boardX] == GameConfig.NOCHESS) {
+                        chessBoard.addChess((boardX + 1) * 100 + boardY + 1)
+                    }
+                }
+                //AI执黑，玩家执白
+                if (GameConfig.BlackStatus == GameConfig.AI && GameConfig.WhiteStatus == GameConfig.PLAYER) {
+                    if (currentRole == GameConfig.BLACKCHESS) {
+                        move = if (ChessBoard.getAllChessNumber() == 0) {
+                            Move(1010)
+                        } else {
+                            Search.getNextMoves(board)
+                        }
+                        if (move != null) {
+                            for (coord in move.coordArray) {
+                                chessBoard.addChess(coord)
+                                //System.out.println("black = "+coord);
+                            }
+                        }
+                    }
+                    if (currentRole == GameConfig.WHITECHESS && board[boardY][boardX] == GameConfig.NOCHESS) {
+                        chessBoard.addChess((boardX + 1) * 100 + boardY + 1)
+                    }
+                }
+            }
+
+            else -> {
+                //机机模式
+            }
+        }
+        evaluationResult()
+
     }
 
 
@@ -202,8 +243,8 @@ class GameBoardView @JvmOverloads constructor(
             WinDialog(context).apply {
                 setWinTitle(
                     if (currentRole == GameConfig.BLACKCHESS) {
-                        "Black   Win !"
-                    } else "White   Win !"
+                        "黑棋胜利！"
+                    } else "白棋胜利！"
                 )
 
                 show()
@@ -215,12 +256,13 @@ class GameBoardView @JvmOverloads constructor(
     private fun getBasicConstant() {
         screenWidth = context.resources.displayMetrics.widthPixels //获取屏幕的宽度
         screenHeight = context.resources.displayMetrics.heightPixels //获取屏幕的高度
-        boardToTop = (screenHeight - screenWidth) / 2
-        grid = screenWidth / 20
+        mTopMargin = (screenHeight - screenWidth) / 2
+        grid = screenWidth / HALF_WIDTH_INTERVAL
         top = grid
         left = grid
         right = grid
         bottom = grid
+        mChessRadius = screenHeight / (WIDTH_INTERVAL * 2f)
     }
 
 }
