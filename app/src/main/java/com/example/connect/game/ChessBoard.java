@@ -1,17 +1,20 @@
 package com.example.connect.game;
 
 
+import com.example.connect.observe.IChessChangeListener;
+
 import java.util.Stack;
 
 
 public class ChessBoard {
 
-    public static char[][] chessBoard = new char[19][19];
+    private static char[][] chessBoard = new char[19][19];
 
-    public char currentRole = GameConfig.BLACKCHESS;
+    private char currentRole = GameConfig.BLACKCHESS;
 
     private static Stack<Integer> play_stack = new Stack<>();
 
+    private IChessChangeListener countChangeListener;
     /**
      * 脱离战场范围的范围
      */
@@ -133,12 +136,16 @@ public class ChessBoard {
         chessBoard[y - 1][x - 1] = getNextStepChessColor();
         // 向下棋的顺序栈中添加棋子
         play_stack.push(coord);
-        //notifyChessBoardModelEvent(new ChessBoardModelEvent(this, coord));
 
+        if (countChangeListener != null) {
+            countChangeListener.onChessCountChange(play_stack.size());
+        }
         char role = getNextStepChessColor();
-//		if(currentRole!=role){
-//			notifyRoleChangeEvent(new RoleChangeEvent(this));
-//		}
+
+        if (currentRole != role && countChangeListener != null) {
+            countChangeListener.onRoleChange(currentRole);
+        }
+
         currentRole = role;
     }
 
@@ -156,5 +163,9 @@ public class ChessBoard {
 
     public static int getyMax() {
         return yMax;
+    }
+
+    public void setCountChangeListener(IChessChangeListener countChangeListener) {
+        this.countChangeListener = countChangeListener;
     }
 }

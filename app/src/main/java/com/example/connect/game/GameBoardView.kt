@@ -10,6 +10,7 @@ import android.view.View
 import com.example.connect.algorithm.Evaluation
 import com.example.connect.algorithm.Search
 import com.example.connect.dialog.WinDialog
+import com.example.connect.observe.IChessChangeListener
 import com.example.desktopdemo.R
 import kotlin.math.min
 
@@ -81,6 +82,18 @@ class GameBoardView @JvmOverloads constructor(
         getBasicConstant()
         ChessBoard.initboard()
         board = chessBoard.chessBoardDate
+        chessBoard.setCountChangeListener(mIChessListener)
+    }
+
+    private val mIChessListener = object : IChessChangeListener {
+        override fun onChessCountChange(curSize: Int) {
+
+        }
+
+        override fun onRoleChange(c: Char) {
+            currentRole = c
+        }
+
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -117,24 +130,15 @@ class GameBoardView @JvmOverloads constructor(
          * 白棋是1*/
         for (i in 0..18) {
             for (j in 0..18) {
-                //黑棋
-                if (board[i][j] == GameConfig.BLACKCHESS) canvas.drawCircle(
+                canvas.drawCircle(
                     ((j + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
                     (mTopMargin + (i + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
                     mChessRadius,
-                    drawBlack
-                )
-
-                //白棋
-                if (board[i][j] == GameConfig.WHITECHESS) canvas.drawCircle(
-                    ((j + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
-                    (mTopMargin + (i + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
-                    mChessRadius,
-                    drawWhite
+                    if (board[i][j] == GameConfig.BLACKCHESS) drawBlack else drawWhite
                 )
             }
         }
-        invalidate()
+//        invalidate()
     }
 
 
@@ -155,8 +159,6 @@ class GameBoardView @JvmOverloads constructor(
 
         boardX = min(boardX, 18)
         boardY = min(boardY, 18)
-
-        currentRole = chessBoard.currentRole
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
