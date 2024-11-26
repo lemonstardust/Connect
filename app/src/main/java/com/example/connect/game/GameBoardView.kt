@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.example.connect.algorithm.Evaluation
@@ -15,13 +16,11 @@ import com.example.desktopdemo.R
 import kotlin.math.min
 
 
-class GameBoardView @JvmOverloads constructor(
-    private val context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+class GameBoardView : View {
 
     companion object {
+        private const val TAG = "GameBoardView"
+
         private const val WIDTH_INTERVAL = 40
         private const val HALF_WIDTH_INTERVAL = WIDTH_INTERVAL / 2
     }
@@ -54,8 +53,15 @@ class GameBoardView @JvmOverloads constructor(
 
     private var boardY = 0
 
+    constructor(context: Context) : this(context, null)
 
-    init {
+    constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, 0)
+
+    constructor(context: Context, attributeSet: AttributeSet?, defStyle: Int) : super(
+        context,
+        attributeSet,
+        defStyle
+    ) {
         initView()
     }
 
@@ -83,15 +89,20 @@ class GameBoardView @JvmOverloads constructor(
         ChessBoard.initboard()
         board = chessBoard.chessBoardDate
         chessBoard.setCountChangeListener(mIChessListener)
+        currentRole = GameConfig.BLACKCHESS
     }
 
     private val mIChessListener = object : IChessChangeListener {
         override fun onChessCountChange(curSize: Int) {
+            evaluationResult()
+            invalidate()
+            Log.i(TAG, "onChessCountChange curSize:$curSize")
 
         }
 
         override fun onRoleChange(c: Char) {
             currentRole = c
+            Log.i(TAG, "current Role:$currentRole")
         }
 
     }
@@ -130,12 +141,26 @@ class GameBoardView @JvmOverloads constructor(
          * 白棋是1*/
         for (i in 0..18) {
             for (j in 0..18) {
-                canvas.drawCircle(
-                    ((j + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
-                    (mTopMargin + (i + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
-                    mChessRadius,
-                    if (board[i][j] == GameConfig.BLACKCHESS) drawBlack else drawWhite
-                )
+                when (board[i][j]) {
+                    GameConfig.BLACKCHESS -> {
+                        canvas.drawCircle(
+                            ((j + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
+                            (mTopMargin + (i + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
+                            mChessRadius,
+                            drawBlack
+                        )
+                    }
+
+                    GameConfig.WHITECHESS -> {
+                        canvas.drawCircle(
+                            ((j + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
+                            (mTopMargin + (i + 1) * screenWidth / HALF_WIDTH_INTERVAL).toFloat(),
+                            mChessRadius,
+                            drawWhite
+                        )
+                    }
+                }
+
             }
         }
 //        invalidate()
@@ -187,8 +212,7 @@ class GameBoardView @JvmOverloads constructor(
                 if (board[boardY][boardX] == GameConfig.NOCHESS) {
                     if (currentRole == GameConfig.BLACKCHESS) {
                         chessBoard.addChess((boardX + 1) * 100 + boardY + 1)
-                    }
-                    if (currentRole == GameConfig.WHITECHESS) {
+                    } else if (currentRole == GameConfig.WHITECHESS) {
                         chessBoard.addChess((boardX + 1) * 100 + boardY + 1)
                     }
                 }
@@ -234,7 +258,7 @@ class GameBoardView @JvmOverloads constructor(
                 //机机模式
             }
         }
-        evaluationResult()
+
 
     }
 
@@ -243,12 +267,12 @@ class GameBoardView @JvmOverloads constructor(
         val result = Evaluation.isGameOver(board)
         if (result) {
             WinDialog(context).apply {
-                setWinTitle(
-                    if (currentRole == GameConfig.BLACKCHESS) {
+                setTitle("游戏结束")
+                setContent(
+                    if (Evaluation.numberOfBlackRoad[6] > 0) {
                         "黑棋胜利！"
                     } else "白棋胜利！"
                 )
-
                 show()
             }
 

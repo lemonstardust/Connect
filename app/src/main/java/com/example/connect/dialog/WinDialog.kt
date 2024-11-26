@@ -1,55 +1,34 @@
 package com.example.connect.dialog
 
-import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import com.example.connect.activity.MainActivity
-import com.example.connect.activity.StartBoard
-import com.example.desktopdemo.R
+import android.view.Gravity
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDialog
 import com.example.desktopdemo.databinding.WinDialogBinding
 
-class WinDialog(context: Context) : Dialog(context), View.OnClickListener {
+class WinDialog(context: Context) : AppCompatDialog(context) {
 
-
-    private val mBinding: WinDialogBinding = WinDialogBinding.inflate(layoutInflater)
+    private var mBinding: WinDialogBinding = WinDialogBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(mBinding.root)
-        init()
+
     }
 
-    private fun init() {
-        mBinding.restart.setOnClickListener(this)
-        mBinding.quit.setOnClickListener(this)
+    override fun onStart() {
+        super.onStart()
+        window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window?.setGravity(Gravity.CENTER)
     }
 
-    fun setWinTitle(s: String) {
-        mBinding.content.text = s
+    fun setTitle(title: String) {
+        mBinding.winTitle.text = title
     }
 
-    override fun onClick(view: View) {
-        when (view.id) {
-            R.id.restart -> {
-                val intent1 = Intent(
-                    context,
-                    StartBoard::class.java
-                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                context.startActivity(intent1)
-                cancel()
-            }
-
-            R.id.quit -> {
-                val intent2 = Intent(
-                    context,
-                    MainActivity::class.java
-                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                context.startActivity(intent2)
-                cancel()
-            }
-
-        }
+    fun setContent(content: String) {
+        mBinding.content.text = content
     }
 }

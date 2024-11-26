@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.connect.dialog.ChooseSide
+import com.example.connect.dialog.WinDialog
 import com.example.connect.game.GameConfig
 import com.example.desktopdemo.R
 import com.example.desktopdemo.databinding.ActivityMainBinding
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.normal.setOnClickListener(this)
         binding.hard.setOnClickListener(this)
         binding.eve.setOnClickListener(this)
+        binding.test.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -60,7 +62,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
 
-            R.id.eve -> Toast.makeText(this@MainActivity, "暂未开放", Toast.LENGTH_SHORT).show()
+            R.id.eve -> {
+//                WinDialogFragment.close(supportFragmentManager)
+                Toast.makeText(this@MainActivity, "暂未开放", Toast.LENGTH_SHORT).show()
+            }
+
+            R.id.test -> {
+                val dialog = WinDialog(this).apply {
+                    setTitle("黑棋胜利！")
+                }
+                dialog.show()
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ public class Search {
 
     public static Move bestMove=null;
 
-    public static int alphaBeta(char[][] chessBoard,int alpha,int beta,int depth){
+    private static int alphaBeta(char[][] chessBoard,int alpha,int beta,int depth){
         int value,best=Integer.MIN_VALUE;
         //DefaultChessBoardModel dcbm=(DefaultChessBoardModel)chessBoardModel;
 
